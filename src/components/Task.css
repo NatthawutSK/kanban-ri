@@ -1,5 +1,4 @@
 .task {
-  background: white;
   border-radius: 4px;
   min-height: 5rem;
   color: black;
@@ -11,27 +10,39 @@
   cursor: move;
 }
 
-.bottomWrapper {
+/* .bottomWrapper {
   display: flex;
   justify-content: space-between;
-}
+} */
 
 .status {
-  font-size: small;
+  /* font-weight: bold; */
   background: var(--COLOR-GRAY-LIGHT);
   padding: 0.25rem;
   border-radius: 4px;
 }
 
 .ONGOING {
+  display: flex;
+  align-items: center;
   background: var(--COLOR-ONGOING);
 }
 
 .DONE {
+  display: flex;
+  align-items: center;
   background: var(--COLOR-DONE);
 }
 
-.task img {
-  height: 1.25rem;
-  cursor: pointer;
+.PLANNED {
+  display: flex;
+  align-items: center;
 }
+
+/* .task img {
+  height: 1.45rem;
+  cursor: pointer;
+} */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

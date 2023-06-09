@@ -14,6 +14,7 @@ export type TaskStore = {
   deleteTask: (id: string) => void;
   setDraggedTask: (title: string) => void;
   moveTask: (title: string, state: "PLANNED" | "ONGOING" | "DONE") => void;
+  editTask: (id: string, edited: string) => void;
 };
 
 export const useStore = create<TaskStore>()(
@@ -33,6 +34,15 @@ export const useStore = create<TaskStore>()(
           tasks: store.tasks.map((task) => {
             if (task.id === id) {
               return { ...task, state: state };
+            }
+            return task;
+          }),
+        })),
+      editTask: (id: string, edited: string) =>
+        set((store) => ({
+          tasks: store.tasks.map((task) => {
+            if (task.id === id) {
+              return { ...task, title: edited };
             }
             return task;
           }),
