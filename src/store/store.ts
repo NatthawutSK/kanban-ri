@@ -4,6 +4,7 @@ import { persist } from "zustand/middleware";
 export type TaskState = {
   id: string;
   title: string;
+  desc: string;
   state: "PLANNED" | "ONGOING" | "DONE";
 };
 
@@ -14,7 +15,7 @@ export type TaskStore = {
   deleteTask: (id: string) => void;
   setDraggedTask: (title: string) => void;
   moveTask: (title: string, state: "PLANNED" | "ONGOING" | "DONE") => void;
-  editTask: (id: string, edited: string) => void;
+  editTask: (id: string, edited: string, desc: string) => void;
 };
 
 export const useStore = create<TaskStore>()(
@@ -38,11 +39,11 @@ export const useStore = create<TaskStore>()(
             return task;
           }),
         })),
-      editTask: (id: string, edited: string) =>
+      editTask: (id: string, title: string, desc: string) =>
         set((store) => ({
           tasks: store.tasks.map((task) => {
             if (task.id === id) {
-              return { ...task, title: edited };
+              return { ...task, title: title, desc: desc };
             }
             return task;
           }),

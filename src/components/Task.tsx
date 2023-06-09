@@ -4,6 +4,16 @@ import editSvg from "../assets/edit-solid.svg";
 import classNames from "classnames";
 import "./Task.css";
 import { useState } from "react";
+import {
+  Button,
+  Dialog,
+  DialogHeader,
+  DialogBody,
+  DialogFooter,
+  Input,
+  Textarea,
+} from "@material-tailwind/react";
+
 type Props = {
   id: string;
 };
@@ -19,8 +29,14 @@ export default function Task({ id }: Props) {
     return null; // Or render an appropriate message or placeholder
   }
 
-  const [editVal, setEditVal] = useState(task.title);
+  const [text, setText] = useState(task.title);
+  const [desc, setDesc] = useState(task.desc);
   const [edit, setEdit] = useState(false);
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setEdit(!edit);
+
+  const handleTask = () => setOpen(!open);
 
   return (
     <div
@@ -28,7 +44,45 @@ export default function Task({ id }: Props) {
       draggable
       onDragStart={() => setDraggedTask(task.id)}
     >
-      {edit ? (
+      <Dialog open={edit} handler={handleOpen}>
+        <div className="flex items-center justify-between">
+          <DialogHeader>Add New Task</DialogHeader>
+        </div>
+        <DialogBody divider>
+          <div className="grid gap-6">
+            <Input
+              onChange={(e) => setText(e.target.value)}
+              value={text}
+              label="Title"
+            />
+            <Textarea
+              onChange={(e) => setDesc(e.target.value)}
+              value={desc}
+              label="Description"
+            />
+          </div>
+        </DialogBody>
+        <DialogFooter className="space-x-2">
+          <Button
+            variant="outlined"
+            className="bg-sky-500 hover:bg-sky-700"
+            onClick={handleOpen}
+          >
+            Close
+          </Button>
+          <Button
+            variant="gradient"
+            color="green"
+            onClick={() => {
+              editTask(task.id, text, desc);
+              handleOpen();
+            }}
+          >
+            Add
+          </Button>
+        </DialogFooter>
+      </Dialog>
+      {/* {edit ? (
         <div className="mb-2">
           <input
             className="w-3/4  pl-2 border-black border-2 mr-2"
@@ -48,11 +102,22 @@ export default function Task({ id }: Props) {
         </div>
       ) : (
         <div className="font-bold no-underline hover:underline text-lg mb-4 container overflow-hidden">
-          <p className="whitespace-no-wrap overflow-hidden text-ellipsis">
+          <p
+            onClick={handleOpen}
+            className="whitespace-no-wrap overflow-hidden text-ellipsis"
+          >
             {task.title}
           </p>
         </div>
-      )}
+      )} */}
+      <div className="font-bold no-underline hover:underline text-lg mb-4 container overflow-hidden">
+        <p
+          onClick={handleTask}
+          className="whitespace-no-wrap overflow-hidden text-ellipsis"
+        >
+          {task.title}
+        </p>
+      </div>
       <div className="flex justify-between">
         <div className="flex gap-2 mt-2">
           <img
@@ -72,6 +137,20 @@ export default function Task({ id }: Props) {
           {task.state}
         </div>
       </div>
+      {/* <Button onClick={handleOpen} variant="gradient">
+        Open Dialog
+      </Button> */}
+      <Dialog
+        open={open}
+        handler={handleTask}
+        animate={{
+          mount: { scale: 1, y: 0 },
+          unmount: { scale: 0.9, y: -100 },
+        }}
+      >
+        <DialogHeader>Title : {task.title}</DialogHeader>
+        <DialogBody divider>{task.desc}</DialogBody>
+      </Dialog>
     </div>
   );
 }
