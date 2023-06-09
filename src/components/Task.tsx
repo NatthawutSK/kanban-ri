@@ -47,8 +47,10 @@ export default function Task({ id }: Props) {
           </button>
         </div>
       ) : (
-        <div className="font-bold no-underline hover:underline text-lg mb-4">
-          <p>{task.title}</p>
+        <div className="font-bold no-underline hover:underline text-lg mb-4 container overflow-hidden">
+          <p className="whitespace-no-wrap overflow-hidden text-ellipsis">
+            {task.title}
+          </p>
         </div>
       )}
       <div className="flex justify-between">
