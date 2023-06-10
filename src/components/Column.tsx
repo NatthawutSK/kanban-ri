@@ -14,7 +14,6 @@ import {
   Input,
   Textarea,
 } from "@material-tailwind/react";
-import { XMarkIcon } from "@heroicons/react/24/solid";
 
 type Props = {
   state: "PLANNED" | "ONGOING" | "DONE";
