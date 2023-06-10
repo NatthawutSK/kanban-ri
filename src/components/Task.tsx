@@ -66,7 +66,11 @@ export default function Task({ id }: Props) {
           <Button
             variant="outlined"
             className="bg-sky-500 hover:bg-sky-700"
-            onClick={handleOpen}
+            onClick={() => {
+              setText(task.title);
+              setDesc(task.desc);
+              handleOpen();
+            }}
           >
             Close
           </Button>
@@ -75,41 +79,15 @@ export default function Task({ id }: Props) {
             color="green"
             onClick={() => {
               editTask(task.id, text, desc);
+              setText(text);
+              setDesc(desc);
               handleOpen();
             }}
           >
-            Add
+            Edit
           </Button>
         </DialogFooter>
       </Dialog>
-      {/* {edit ? (
-        <div className="mb-2">
-          <input
-            className="w-3/4  pl-2 border-black border-2 mr-2"
-            type="text"
-            value={editVal}
-            onChange={(e) => setEditVal(e.target.value)}
-          />
-          <button
-            className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 border-b-4 border-blue-700 hover:border-blue-500 rounded"
-            onClick={() => {
-              editTask(task.id, editVal);
-              setEdit(false);
-            }}
-          >
-            Save
-          </button>
-        </div>
-      ) : (
-        <div className="font-bold no-underline hover:underline text-lg mb-4 container overflow-hidden">
-          <p
-            onClick={handleOpen}
-            className="whitespace-no-wrap overflow-hidden text-ellipsis"
-          >
-            {task.title}
-          </p>
-        </div>
-      )} */}
       <div className="font-bold no-underline hover:underline text-lg mb-4 container overflow-hidden">
         <p
           onClick={handleTask}
@@ -137,9 +115,6 @@ export default function Task({ id }: Props) {
           {task.state}
         </div>
       </div>
-      {/* <Button onClick={handleOpen} variant="gradient">
-        Open Dialog
-      </Button> */}
       <Dialog
         open={open}
         handler={handleTask}
@@ -148,8 +123,20 @@ export default function Task({ id }: Props) {
           unmount: { scale: 0.9, y: -100 },
         }}
       >
-        <DialogHeader>Title : {task.title}</DialogHeader>
-        <DialogBody divider>{task.desc}</DialogBody>
+        <DialogHeader>Title</DialogHeader>
+        <DialogBody
+          className="whitespace-normal overflow-hidden break-words text-lg "
+          divider
+        >
+          {task.title}
+        </DialogBody>
+        <DialogHeader>Description</DialogHeader>
+        <DialogBody
+          className="whitespace-normal overflow-hidden break-words"
+          divider
+        >
+          {task.desc}
+        </DialogBody>
       </Dialog>
     </div>
   );

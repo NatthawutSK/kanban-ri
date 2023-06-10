@@ -96,6 +96,7 @@ export default function Column({ state }: Props) {
             onClick={() => {
               addTask({ id: uuidv4(), title: text, state: state, desc: desc });
               setText("");
+              setDesc("");
               handleOpen();
             }}
           >
